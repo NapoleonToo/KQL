@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KQL Dynamic List Generator</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      background: #1e1e1e;
+      max-width: 600px;
+      width: 100%;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .top-nav button {
+      background-color: #263238;
+      color: #e0e0e0;
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .top-nav button:hover {
+      background-color: #37474f;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      color: #90caf9;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #b0bec5;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      color: #e0e0e0;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #555;
+      border-radius: 6px;
+      background-color: #2a2a2a;
+      color: #e0e0e0;
+      font-family: monospace;
+      font-size: 0.95rem;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    button {
+      padding: 0.5rem 1.25rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background-color: #2196f3;
+      color: white;
+    }
+
+    .btn-secondary {
+      background-color: #424242;
+      color: #e0e0e0;
+      border: 1px solid #666;
+    }
+
+    .btn-disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+
+    .status {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: #81c784;
+    }
+
+    .output {
+      margin-top: 1rem;
+    }
+
+    .code-box {
+      background: linear-gradient(to right, #263238, #37474f, #455a64);
+      color: #ffffff;
+      padding: 1rem;
+      padding-right: 11%;
+      border-radius: 6px;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+      position: relative;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ffffff33;
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .download-btn {
+      margin-top: 1rem;
+      width: 100%;
+      background: #37474f;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useRef } = React;
+
+    function App() {
+      const [varName, setVarName] = useState("IoCs_list");
+      const [inputText, setInputText] = useState("");
+      const [kqlOutput, setKqlOutput] = useState("");
+      const [valueCount, setValueCount] = useState(null);
+      const [status, setStatus] = useState("");
+      const outputRef = useRef(null);
+
+      const parseInput = () => {
+        return inputText
+          .split("\n")
+          .map(x => x.trim())
+          .filter(Boolean);
+      };
+
+      const handleGenerate = () => {
+        const values = parseInput();
+        const escaped = values.map(v => `"${v.replace(/"/g, '\\"')}"`);
+        const rawKQL = `let ${varName} = dynamic([${escaped.join(", ")}]);`;
+        setKqlOutput(rawKQL);
+        setValueCount(values.length);
+        setStatus("");
+      };
+
+      const handleReset = () => {
+        setVarName("MyValues");
+        setInputText("");
+        setKqlOutput("");
+        setValueCount(null);
+        setStatus("");
+      };
+
+      const handleDedup = () => {
+        const original = parseInput();
+        const deduped = [...new Set(original)];
+        setInputText(deduped.join("\n"));
+        setStatus(`Deduplicated! Removed ${original.length - deduped.length} duplicate${original.length - deduped.length !== 1 ? 's' : ''}. Total values: ${deduped.length}`);
+      };
+
+      const handleCopy = () => {
+        navigator.clipboard.writeText(kqlOutput).then(() => {
+          setStatus("Copied to clipboard!");
+        });
+      };
+
+      const handleDownload = () => {
+        const blob = new Blob([kqlOutput], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${varName}.kql`;
+        link.click();
+      };
+
+      const handleDrop = (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if (file && file.name.endsWith(".csv")) {
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            const lines = evt.target.result
+              .split("\n")
+              .map(l => l.split(",")[0].trim())
+              .filter(Boolean);
+            setInputText(lines.join("\n"));
+          };
+          reader.readAsText(file);
+        }
+      };
+
+      const openURL = (url) => window.open(url, "_blank");
+
+      return (
+        <>
+          <div className="top-nav">
+            <button onClick={() => openURL("https://www.virustotal.com/")}>VirusTotal</button>
+            <button onClick={() => openURL("https://urlscan.io/")}>urlscan.io</button>
+            <button onClick={() => openURL("https://mxtoolbox.com/")}>MXToolbox</button>
+            <button onClick={() => openURL("https://whois.domaintools.com/")}>DomainTools</button>
+          </div>
+
+          <div className="container">
+            <h1>KQL Dynamic List Generator</h1>
+            <p className="subtitle">Paste comma-separated values or one item per line</p>
+
+            <label htmlFor="varName">Dynamic List Name</label>
+            <input id="varName" value={varName} onChange={e => setVarName(e.target.value)} />
+
+            <label htmlFor="inputText">Paste values (or drop CSV file)</label>
+            <textarea
+              id="inputText"
+              value={inputText}
+              onChange={e => setInputText(e.target.value)}
+              onDrop={handleDrop}
+              placeholder={`e.g.\n123.123.123\nexample.com\nabcd`}
+            />
+
+            <div className="btn-group">
+              <button className="btn-primary" onClick={handleGenerate}>Generate KQL</button>
+              <button className="btn-secondary" onClick={handleReset}>Reset</button>
+              <button className="btn-secondary" onClick={handleDedup}>Deduplicate</button>
+            </div>
+
+            {status && <div className="status">{status}</div>}
+            {valueCount !== null && !status && (
+              <div className="status">Total values: {valueCount}</div>
+            )}
+
+            {kqlOutput && (
+              <div className="output">
+                <label>Output</label>
+                <div className="code-box" ref={outputRef}>
+                  <button className="copy-btn" onClick={handleCopy}>Copy</button>
+                  {kqlOutput}
+                </div>
+                <button className="btn-secondary download-btn" onClick={handleDownload}>
+                  Download .kql
+                </button>
+              </div>
+            )}
+          </div>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
