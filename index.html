@@ -23,7 +23,7 @@
       align-items: flex-start;
     }
 
-    .sidebar {
+    .sidebar, .toolsbar {
       min-width: 160px;
       background: #1a1a1a;
       padding: 1rem;
@@ -32,14 +32,14 @@
       height: fit-content;
     }
 
-    .sidebar h3 {
+    .sidebar h3, .toolsbar h3 {
       margin-top: 0;
       font-size: 1rem;
       color: #90caf9;
       margin-bottom: 1rem;
     }
 
-    .sidebar button {
+    .sidebar button, .toolsbar button {
       display: block;
       width: 100%;
       margin-bottom: 0.5rem;
@@ -55,7 +55,7 @@
       transition: background 0.2s ease;
     }
 
-    .sidebar button:hover {
+    .sidebar button:hover, .toolsbar button:hover {
       background-color: #37474f;
     }
 
@@ -209,11 +209,20 @@
     <button onclick="window.open('https://app.any.run/', '_blank')">ANY.RUN</button>
     <button onclick="window.open('https://www.joesandbox.com/', '_blank')">Joe Sandbox</button>
     <button onclick="window.open('https://www.hybrid-analysis.com/', '_blank')">Hybrid Analysis</button>
-    <button onclick="window.open('https://otx.alienvault.com/browse/global/pulses?include_inactive=0&sort=-modified&page=1&limit=10', '_blank')">OTX Alien Vault</button>
-    <!-- <button onclick="window.open('https://analyze.intezer.com/', '_blank')">Intezer</button> -->
+    <button onclick="window.open('https://otx.alienvault.com/', '_blank')">OTX AlienVault</button>
+    <button onclick="window.open('https://www.filescan.io/scan', '_blank')">Filescan.io</button>
   </div>
 
   <div id="root"></div>
+
+  <div class="toolsbar">
+    <h3>Tools</h3>
+    <button onclick="window.open('https://gchq.github.io/CyberChef/', '_blank')">CyberChef</button>
+    <button onclick="window.open('https://regex101.com/', '_blank')">Regex101</button>
+    <button onclick="window.open('https://ssltools.digicert.com/checker/', '_blank')">SSL Checker</button>
+    <button onclick="window.open('https://base64.guru/converter/decode/text', '_blank')">Base64 Decoder</button>
+    <button onclick="window.open('https://urlencoder.org/', '_blank')">URL Encoder/Decoder</button>
+  </div>
 
   <script type="text/babel">
     const { useState, useRef } = React;
@@ -226,12 +235,7 @@
       const [status, setStatus] = useState("");
       const outputRef = useRef(null);
 
-      const parseInput = () => {
-        return inputText
-          .split("\n")
-          .map(x => x.trim())
-          .filter(Boolean);
-      };
+      const parseInput = () => inputText.split("\n").map(x => x.trim()).filter(Boolean);
 
       const handleGenerate = () => {
         const values = parseInput();
@@ -278,10 +282,7 @@
         if (file && file.name.endsWith(".csv")) {
           const reader = new FileReader();
           reader.onload = (evt) => {
-            const lines = evt.target.result
-              .split("\n")
-              .map(l => l.split(",")[0].trim())
-              .filter(Boolean);
+            const lines = evt.target.result.split("\n").map(l => l.split(",")[0].trim()).filter(Boolean);
             setInputText(lines.join("\n"));
           };
           reader.readAsText(file);
@@ -321,9 +322,7 @@
           </div>
 
           {status && <div className="status">{status}</div>}
-          {valueCount !== null && !status && (
-            <div className="status">Total values: {valueCount}</div>
-          )}
+          {valueCount !== null && !status && <div className="status">Total values: {valueCount}</div>}
 
           {kqlOutput && (
             <div className="output">
