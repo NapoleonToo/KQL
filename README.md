@@ -32,10 +32,23 @@ Generate structured KQL dynamic() lists from plain text, CSVs, or IOC inputs —
   Investigate domain registration, WHOIS, and risk scoring.  
   🔗 [https://whois.domaintools.com](https://whois.domaintools.com)
 
+🧰 Quick Links to Sandboxes
+
+- **AnyRun**    
+  🔗 [https://app.any.run](https://app.any.run)
+
+- **JoeSandbox**    
+  🔗 [https://www.joesandbox.com](https://www.joesandbox.com)
+
+- **Hybrid Analisys**   
+  🔗 [https://www.hybrid-analysis.com](https://www.hybrid-analysis.com)
+  
+- **OTX Alien Vault**   
+  🔗 [https://otx.alienvault.com/browse/global/pulses?include_inactive=0&sort=-modified&page=1&limit=10](https://otx.alienvault.com/browse/global/pulses?include_inactive=0&sort=-modified&page=1&limit=10)
 
 📸 Screenshot<br>
 <p align="center">
-  <img width="621" height="786" alt="image" src="https://github.com/user-attachments/assets/f5f7a29e-cb21-41dd-a096-a5649f5aeefe" />
+<img width="724" height="540" alt="image" src="https://github.com/user-attachments/assets/773ef422-7695-4900-a1b1-2f66306efaed" />
 </p>
 
 
