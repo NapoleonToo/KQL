@@ -1,20 +1,30 @@
 ## 🧮 KQL Dynamic List Generator
-Generate structured KQL dynamic() lists from plain text, CSVs, or IOC inputs — right from your browser. Built for threat hunters, SOC analysts, and anyone tired of hand-wrapping variables into queries.
+Generate structured `KQL dynamic()` lists from plain text, CSVs, or IOC inputs — right from your browser.  
+Built for threat hunters, SOC analysts, and anyone tired of hand-wrapping variables into queries.
 
-🔗 Live site: [https://iocbox.com](https://iocbox.com)
+🔗 Live site: [https://iocbox.com](https://iocbox.com)  
+📁 Source code: You're already here!
 
-📁 Source code: You're already here! 
+---
 
 ## 🚀 Features
-✅ Paste indicators or values (IP, domain, file hash, etc.) <br>
-✅ Drag-and-drop CSV support (takes 1st column)<br>
-✅ Deduplicate with a single click<br>
-✅ Generate ready-to-use KQL: 
-``` let IoC_list = dynamic(["value1", "value2", ...]); ```<br>
-✅ Copy or download your output as `.kql`<br>
-✅ Built-in dark mode for late-night hunting 🌙<br>
 
-🧰 Quick Links to Common Tools
+✅ Paste indicators or values (IP, domain, file hash, etc.)  
+✅ Drag-and-drop CSV support (takes 1st column)  
+✅ Deduplicate with a single click  
+✅ Generate ready-to-use KQL:
+
+```kql
+let IoC_list = dynamic(["value1", "value2", ...]);
+```
+
+✅ Copy or download your output as `.kql`  
+✅ Built-in dark mode for late-night hunting 🌙  
+✅ One-click access to tools and sandboxes  
+
+---
+
+## 🧰 Quick Links – Lookup Tools
 
 - **VirusTotal**  
   Security scanner for files and URLs.  
@@ -32,41 +42,106 @@ Generate structured KQL dynamic() lists from plain text, CSVs, or IOC inputs —
   Investigate domain registration, WHOIS, and risk scoring.  
   🔗 [https://whois.domaintools.com](https://whois.domaintools.com)
 
+---
 
-📸 Screenshot<br>
+## 🧪 Quick Links – Sandboxes
+
+- **ANY.RUN**  
+  Dynamic malware sandbox with visualized execution.  
+  🔗 [https://app.any.run](https://app.any.run)
+
+- **Joe Sandbox**  
+  Advanced malware analysis platform.  
+  🔗 [https://www.joesandbox.com](https://www.joesandbox.com)
+
+- **Hybrid Analysis**  
+  File and URL malware analysis.  
+  🔗 [https://www.hybrid-analysis.com](https://www.hybrid-analysis.com)
+
+- **OTX AlienVault**  
+  Threat intelligence from global community pulses.  
+  🔗 [https://otx.alienvault.com](https://otx.alienvault.com)
+
+---
+
+## 🛠️ Quick Links – Analyst Tools
+
+- **CyberChef**  
+  Web-based encoding, decoding, encryption, and analysis toolkit.  
+  🔗 [https://gchq.github.io/CyberChef/](https://gchq.github.io/CyberChef/)
+
+- **Regex101**  
+  Test, debug, and share regular expressions.  
+  🔗 [https://regex101.com](https://regex101.com)
+
+- **SSL Labs Checker**  
+  Test SSL configuration and rating.  
+  🔗 [https://www.ssllabs.com/ssltest/](https://www.ssllabs.com/ssltest/)
+
+- **Base64 Decoder**  
+  Convert Base64 to human-readable text.  
+  🔗 [https://base64.guru/converter/decode/text](https://base64.guru/converter/decode/text)
+
+- **URL Encoder/Decoder**  
+  Encode or decode URL components.  
+  🔗 [https://urlencoder.org](https://urlencoder.org)
+
+---
+
+## 📸 Screenshot
+
 <p align="center">
-  <img width="621" height="786" alt="image" src="https://github.com/user-attachments/assets/f5f7a29e-cb21-41dd-a096-a5649f5aeefe" />
+  <img width="980" height="539" alt="image" src="https://github.com/user-attachments/assets/f5a9f126-4106-4df9-b1ff-5e49e6f52a8b" />
 </p>
 
+---
 
+## 🎯 How to Use
 
-🛠️ How to Use<br>
-1. Enter or paste one value per line (or drop a CSV).<br>
-2. Click Generate KQL.<br>
-3. Copy it, use it in Microsoft Sentinel, Defender, or any Log Analytics workspace.<br>
+1. Enter or paste one value per line (or drop a CSV file).  
+2. Click **Generate KQL**.  
+3. Copy it or download your `.kql` file. Use it in Microsoft Sentinel, Defender, or any Kusto environment.
 
-## 🔐 Designed For<br>
-- SOC Analysts
-- Threat Hunters
-- GRC & IR teams
-- Blue team automation workflows
+---
+
+## 🔐 Designed For
+
+- SOC Analysts  
+- Threat Hunters  
+- GRC & IR Teams  
+- Blue Team automation workflows  
+
+---
 
 ## 💡 Tips
-- Name your variable in the “Dynamic List Name” field to keep your query readable.
-- Clean your data with Deduplicate before generating.
-- Use the toolbar at the top to pivot to VirusTotal or urlscan.io instantly.
+
+- Name your variable in the “Dynamic List Name” field to keep queries readable.  
+- Clean your data with **Deduplicate** before generating.  
+- Use sidebars to quickly pivot to sandboxes and analysis tools.
+
+---
 
 ## 🧰 Tech Stack
-✅ ReactJS <br>
-✅ HTML5 / CSS3 (dark mode by default)<br>
-✅ GitHub Pages for free hosting<br>
+
+✅ ReactJS  
+✅ HTML5 + CSS3 (dark mode by default)  
+✅ GitHub Pages for hosting  
+
+---
 
 ## 🙏 Inspiration
 
-This project was inspired by [alexverboon's KustoVars](https://github.com/alexverboon/KustoVars), a helpful tool for generating dynamic KQL variables.
+This project was inspired by [alexverboon's KustoVars](https://github.com/alexverboon/KustoVars), a great CLI-friendly approach to building KQL structures.
+
+---
 
 ## ✨ Contribute
-Want to improve this? Open an issue or pull request — ideas like syntax highlighting, multi-var output, or IOC enrichment are welcome!
+
+Want to improve this? Open an issue or pull request!  
+Ideas like syntax highlighting, tag-based output, or IOC enrichment are all welcome.
+
+---
 
 ## 📄 License
-MIT License. Use it, fork it, share it — just don’t sell it as-is.
+
+MIT License. Use it, fork it, improve it — just don’t sell it as-is.
