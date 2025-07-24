@@ -18,7 +18,45 @@
       color: #e0e0e0;
       padding: 2rem;
       display: flex;
+      gap: 2rem;
       justify-content: center;
+      align-items: flex-start;
+    }
+
+    .sidebar {
+      min-width: 160px;
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+      height: fit-content;
+    }
+
+    .sidebar h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      color: #90caf9;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      background-color: #263238;
+      color: #e0e0e0;
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s ease;
+    }
+
+    .sidebar button:hover {
+      background-color: #37474f;
     }
 
     .container {
@@ -166,6 +204,14 @@
   </style>
 </head>
 <body>
+  <div class="sidebar">
+    <h3>Sandboxes</h3>
+    <button onclick="window.open('https://app.any.run/', '_blank')">ANY.RUN</button>
+    <button onclick="window.open('https://www.joesandbox.com/', '_blank')">Joe Sandbox</button>
+    <button onclick="window.open('https://www.hybrid-analysis.com/', '_blank')">Hybrid Analysis</button>
+    <!-- <button onclick="window.open('https://analyze.intezer.com/', '_blank')">Intezer</button> -->
+  </div>
+
   <div id="root"></div>
 
   <script type="text/babel">
@@ -244,7 +290,7 @@
       const openURL = (url) => window.open(url, "_blank");
 
       return (
-        <>
+        <div className="container">
           <div className="top-nav">
             <button onClick={() => openURL("https://www.virustotal.com/")}>VirusTotal</button>
             <button onClick={() => openURL("https://urlscan.io/")}>urlscan.io</button>
@@ -252,47 +298,45 @@
             <button onClick={() => openURL("https://whois.domaintools.com/")}>DomainTools</button>
           </div>
 
-          <div className="container">
-            <h1>KQL Dynamic List Generator</h1>
-            <p className="subtitle">Paste comma-separated values or one item per line</p>
+          <h1>KQL Dynamic List Generator</h1>
+          <p className="subtitle">Paste comma-separated values or one item per line</p>
 
-            <label htmlFor="varName">Dynamic List Name</label>
-            <input id="varName" value={varName} onChange={e => setVarName(e.target.value)} />
+          <label htmlFor="varName">Dynamic List Name</label>
+          <input id="varName" value={varName} onChange={e => setVarName(e.target.value)} />
 
-            <label htmlFor="inputText">Paste values (or drop CSV file)</label>
-            <textarea
-              id="inputText"
-              value={inputText}
-              onChange={e => setInputText(e.target.value)}
-              onDrop={handleDrop}
-              placeholder={`e.g.\n123.123.123\nexample.com\nabcd`}
-            />
+          <label htmlFor="inputText">Paste values (or drop CSV file)</label>
+          <textarea
+            id="inputText"
+            value={inputText}
+            onChange={e => setInputText(e.target.value)}
+            onDrop={handleDrop}
+            placeholder={`e.g.\n123.123.123\nexample.com\nabcd`}
+          />
 
-            <div className="btn-group">
-              <button className="btn-primary" onClick={handleGenerate}>Generate KQL</button>
-              <button className="btn-secondary" onClick={handleReset}>Reset</button>
-              <button className="btn-secondary" onClick={handleDedup}>Deduplicate</button>
-            </div>
-
-            {status && <div className="status">{status}</div>}
-            {valueCount !== null && !status && (
-              <div className="status">Total values: {valueCount}</div>
-            )}
-
-            {kqlOutput && (
-              <div className="output">
-                <label>Output</label>
-                <div className="code-box" ref={outputRef}>
-                  <button className="copy-btn" onClick={handleCopy}>Copy</button>
-                  {kqlOutput}
-                </div>
-                <button className="btn-secondary download-btn" onClick={handleDownload}>
-                  Download .kql
-                </button>
-              </div>
-            )}
+          <div className="btn-group">
+            <button className="btn-primary" onClick={handleGenerate}>Generate KQL</button>
+            <button className="btn-secondary" onClick={handleReset}>Reset</button>
+            <button className="btn-secondary" onClick={handleDedup}>Deduplicate</button>
           </div>
-        </>
+
+          {status && <div className="status">{status}</div>}
+          {valueCount !== null && !status && (
+            <div className="status">Total values: {valueCount}</div>
+          )}
+
+          {kqlOutput && (
+            <div className="output">
+              <label>Output</label>
+              <div className="code-box" ref={outputRef}>
+                <button className="copy-btn" onClick={handleCopy}>Copy</button>
+                {kqlOutput}
+              </div>
+              <button className="btn-secondary download-btn" onClick={handleDownload}>
+                Download .kql
+              </button>
+            </div>
+          )}
+        </div>
       );
     }
 
