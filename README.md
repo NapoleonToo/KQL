@@ -94,7 +94,7 @@ let IoC_list = dynamic(["value1", "value2", ...]);
 ## 📸 Screenshot
 
 <p align="center">
-  <img width="980" height="539" alt="image" src="https://github.com/user-attachments/assets/f5a9f126-4106-4df9-b1ff-5e49e6f52a8b" />
+  <img width="1167" height="662" alt="image" src="https://github.com/user-attachments/assets/1bf8baf1-428b-4ef5-b80d-48af1cc912eb" />
 </p>
 
 ---
