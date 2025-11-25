@@ -86,6 +86,9 @@ let IoC_list = dynamic(["value1", "value2", ...]);
   Encode or decode URL components.  
   🔗 [https://urlencoder.org](https://urlencoder.org)
 
+- **Diagrams builder**  
+  Build diagrams and timelines of events.  
+  🔗 [https://app.diagrams.net/](https://app.diagrams.net/)
 ---
 
 ## 📸 Screenshot
